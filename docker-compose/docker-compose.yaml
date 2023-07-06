@@ -18,7 +18,9 @@ services:
     networks:
       - cassandra_network
     command: >
-      bash ./docker-entrypoint.sh/execute-cql.sh
-
+      bash -c "apt-get update && apt-get install -y dos2unix &&
+               dos2unix ./docker-entrypoint.sh/execute-cql.sh &&
+               chmod +x ./docker-entrypoint.sh/execute-cql.sh &&
+               ./docker-entrypoint.sh/execute-cql.sh"
 networks:
   cassandra_network:
