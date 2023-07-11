@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   cassandra_db:
-    image: cassandra:4.1.0
+    container_name: cassandra_db
+    build:
+      dockerfile: Dockerfile
     ports:
       - "9042:9042"
     environment:
@@ -11,15 +13,15 @@ services:
       - cassandra_network
 
   cassandra_temp:
-    image: cassandra:4.1.0
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./scripts/bash:/docker-entrypoint.sh
       - ./scripts/cql:/tmp/cql
     networks:
       - cassandra_network
     command: >
-      bash -c "apt-get update && apt-get install -y dos2unix &&
-               dos2unix ./docker-entrypoint.sh/execute-cql.sh &&
+      bash -c "dos2unix ./docker-entrypoint.sh/execute-cql.sh &&
                chmod +x ./docker-entrypoint.sh/execute-cql.sh &&
                ./docker-entrypoint.sh/execute-cql.sh"
 networks:
