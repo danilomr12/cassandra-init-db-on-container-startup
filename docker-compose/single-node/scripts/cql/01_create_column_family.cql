@@ -1,5 +1,5 @@
 
-CREATE COLUMNFAMILY iot.sensors (
+CREATE TABLE iot.sensors (
                              device_id text PRIMARY KEY,
                              device_name text,
                              ip_address inet,
